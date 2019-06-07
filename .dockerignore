@@ -1,0 +1,12 @@
+# Dependencies and Build Artifacts
+**/node_modules
+client/build
+
+# Unnecessary files
+.idea
+**/.gitignore
+**/README.md
+**/CONTRIBUTING.md
+
+# Secrets
+**/*.env

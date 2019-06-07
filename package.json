@@ -1,14 +1,19 @@
 {
   "name": "@tanndev/initiate",
   "version": "1.0.0",
+  "private": true,
   "description": "Combat initiative tracker for roleplaying games",
   "main": "server/app.js",
   "scripts": {
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "cd client && npm install",
     "client-start": "cd client && npm start",
     "client-build": "cd client && npm run build",
-    "client-test": "cd client && npm test"
+    "client-test": "cd client && npm test",
+    "services": "docker-compose up -d redis couch",
+    "docker-build": "docker build -t jftanner/initiate .",
+    "docker-push": "docker push jftanner/initiate"
   },
   "repository": {
     "type": "git",
@@ -31,6 +36,9 @@
     "url": "https://github.com/tanndev/initiate/issues"
   },
   "homepage": "https://github.com/tanndev/initiate#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "http-errors": "^1.7.2",
