@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
 const path = require('path');
+const readline = require('readline');
 const shortid = require('shortid');
 
 // Initialize express and socket.io
@@ -34,7 +35,6 @@ app.use((req, res) => {
 // Handle Socket.io connections.
 io.on('connection', socket => {
     const clientId = shortid.generate();
-    console.log(`Client ${clientId} connected.`);
 
     // Give the client their clientId
     socket.emit("ClientId", {clientId});
@@ -42,20 +42,31 @@ io.on('connection', socket => {
     // Periodically send them a random number.
     let interval = setInterval(() => {
         const random = shortid.generate();
-        console.log(`Sent random value ${random} to client ${clientId}`);
         socket.emit("Random", {clientId, random});
-    }, 1000);
+    }, 4000);
 
     socket.on("disconnect", () => {
         clearInterval(interval);
-        console.log(`Client ${clientId} disconnected.`);
     })
 });
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function askForMessage (){
+    rl.question("Send a message to all clients:", answer => {
+        io.emit("Text", answer);
+        askForMessage();
+    })
+}
 
 // Listen
 const port = process.env.PORT || 3001;
 server.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`);
+    askForMessage();
 });
 
 module.exports = app;
