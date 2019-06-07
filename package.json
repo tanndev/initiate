@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm start",
     "client-install": "cd client && npm install",
-    "client-start": "cd client && npm start",
     "client-build": "cd client && npm run build",
     "client-test": "cd client && npm test",
     "services": "docker-compose up -d redis couch",
@@ -42,6 +42,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "http-errors": "^1.7.2",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "shortid": "^2.2.14",
+    "socket.io": "^2.2.0"
   }
 }
