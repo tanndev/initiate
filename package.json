@@ -1,0 +1,30 @@
+{
+  "name": "@tanndev/initiate",
+  "version": "1.0.0",
+  "description": "Combat initiative tracker for roleplaying games",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanndev/initiate.git"
+  },
+  "keywords": [
+    "initiative",
+    "D&D",
+    "RPG",
+    "roleplaying",
+    "game",
+    "combat",
+    "tracker",
+    "turn",
+    "round"
+  ],
+  "author": "James Tanner <james.tanner@tanndev.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanndev/initiate/issues"
+  },
+  "homepage": "https://github.com/tanndev/initiate#readme"
+}
