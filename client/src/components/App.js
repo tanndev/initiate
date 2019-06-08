@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import socketIOClient from "socket.io-client";
-import logo from './logo.svg';
-import './App.css';
+import logo from '../assets/logo.svg';
+import '../styles/App.css';
 
-import ChatOutput from './components/ChatOutput';
-import ChatInput from './components/ChatInput';
+import ChatOutput from './ChatOutput';
+import ChatInput from './ChatInput';
 
 export default function App() {
   const [socket, setSocket] = useState(null);
@@ -12,7 +12,7 @@ export default function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const socket = socketIOClient('http://localhost:3001');
+    const socket = socketIOClient('http://localhost:3000');
     setSocket(socket);
 
     socket.on("Welcome", data => {
