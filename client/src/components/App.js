@@ -3,13 +3,9 @@ import socketIOClient from "socket.io-client";
 import logo from '../assets/logo.svg';
 import '../styles/App.css';
 
-import ChatOutput from './ChatOutput';
-import ChatInput from './ChatInput';
-
 export default function App() {
   const [socket, setSocket] = useState(null);
   const [clientId, setClientId] = useState(null);
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const socket = socketIOClient('http://localhost:3000');
@@ -22,8 +18,7 @@ export default function App() {
     });
 
     socket.on("Message", messageEntry => {
-      console.log('Recieved message:', messageEntry);
-      addMessage(messageEntry);
+      console.log('Received message:', messageEntry);
     });
 
     socket.on("disconnect", () => {
@@ -31,15 +26,6 @@ export default function App() {
       setClientId(null);
     });
   }, []);
-
-  function sendMessage(message) {
-    socket.emit("Message", message);
-    addMessage({clientId, message, mine: true});
-  }
-
-  function addMessage(messageEntry) {
-    setMessages(messages => messages.concat(messageEntry));
-  }
 
   return (
     <div className="App">
@@ -59,10 +45,6 @@ export default function App() {
         <p>
           You are {clientId ? `connected as ${clientId}` : 'not connected'}.
         </p>
-        <div>
-          <ChatOutput messages={messages}/>
-          <ChatInput sendMessage={sendMessage}/>
-        </div>
       </header>
     </div>
   );
