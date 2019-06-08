@@ -47,9 +47,9 @@ pipeline {
                     sshagent(['jenkins.ssh']) {
                         sh 'ssh docker.tanndev.com rm -rf initiate'
                         sh 'ssh docker.tanndev.com mkdir initiate'
-                        sh 'scp docker-compose.yml docker.tanndev.com:initiate/'
+                        sh 'scp docker-compose* docker.tanndev.com:initiate/'
                         sh 'ssh docker.tanndev.com "cd initiate && docker-compose pull"'
-                        sh 'ssh docker.tanndev.com "cd initiate && docker-compose up -d"'
+                        sh 'ssh docker.tanndev.com "cd initiate && docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d"'
                     }
 
 

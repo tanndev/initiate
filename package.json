@@ -13,7 +13,8 @@
     "client-install": "cd client && npm install",
     "client-build": "cd client && npm run build",
     "client-test": "cd client && npm test",
-    "services": "docker-compose up -d redis couch",
+    "services": "docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d redis couch",
+    "docker-compose": "docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d --build",
     "docker-build": "docker build -t jftanner/initiate .",
     "docker-push": "docker push jftanner/initiate"
   },
