@@ -1,0 +1,11 @@
+/*
+ * Available fonts, important from https://fonts.google.com:
+ * font-family: 'Bilbo Swash Caps', cursive;
+ * font-family: 'Quintessential', cursive;
+ * font-family: 'Marcellus SC', serif;
+ * font-family: 'Cormorant SC', serif;
+ * font-family: 'Montserrat Subrayada', sans-serif;
+ *
+ * See https://fonts.google.com/selection?category=Sans+Serif&selection.family=Bilbo+Swash+Caps|Cormorant+SC|Marcellus+SC|Montserrat+Subrayada|Quintessential
+ */
+@import url('https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps|Cormorant+SC|Marcellus+SC|Montserrat+Subrayada|Quintessential&display=swap');

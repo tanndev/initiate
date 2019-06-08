@@ -3,6 +3,8 @@ import socketIOClient from "socket.io-client";
 import logo from '../assets/logo.svg';
 import '../styles/App.css';
 
+import Header from './Header';
+
 export default function App() {
   const [socket, setSocket] = useState(null);
   const [clientId, setClientId] = useState(null);
@@ -29,7 +31,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <Header />
+      <div className="App-home">
         <h2>
           Welcome to Initiate!
         </h2>
@@ -45,7 +48,7 @@ export default function App() {
         <p>
           You are {clientId ? `connected as ${clientId}` : 'not connected'}.
         </p>
-      </header>
+      </div>
     </div>
   );
 }

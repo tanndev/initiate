@@ -1,0 +1,36 @@
+Header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #902222;
+}
+
+.Header-title {
+  font-family: 'Cormorant SC', serif;
+  font-size: xx-large;
+  margin: 0.1rem 1rem;
+  color: #d2cb16;
+}
+
+.Navbar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.Navbar-button {
+  height: 100%;
+  padding: 0.2rem 1rem;
+  text-align: center;
+  color: #c3fbff;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Navbar-button:hover {
+  background-color: #111;
+}
+
