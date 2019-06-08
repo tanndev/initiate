@@ -4,6 +4,7 @@
 !/.idea/dictionaries/
 !/.idea/runConfigurations/
 !/.idea/scopes/
+/pipeline-gdsl
 
 # Node & NPM
 node_modules

@@ -52,12 +52,8 @@ pipeline {
                         sh 'ssh docker.tanndev.com "cd initiate && docker-compose up -d"'
                     }
 
-                    if (RELEASE_VERSION) {
-                        slackSend channel: '#initiate', color: 'good', message: "Released <https://initiate.tanndev.com|Initiate> ${RELEASE_VERSION}. (<${RELEASE_URL}|Release Notes>) (<${env.BUILD_URL}console|Build Console>)"
-                    }
-                    else {
-                        slackSend channel: '#initiate', color: 'good', message: "Redeployed <https://initiate.tanndev.com|Initiate>. (<${env.BUILD_URL}console|Build Console>)"
-                    }
+
+                    slackSend channel: '#initiate', color: 'good', message: "Deployed <https://initiate.tanndev.com|Initiate>. (<${env.BUILD_URL}console|Build Console>)"
                 }
             }
         }
