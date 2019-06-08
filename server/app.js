@@ -36,17 +36,18 @@ app.use((req, res) => {
 io.on('connection', socket => {
     const clientId = shortid.generate();
 
-    // Give the client their clientId
-    socket.emit("ClientId", {clientId});
+    socket.broadcast.emit('Join', {clientId});
 
-    // Periodically send them a random number.
-    let interval = setInterval(() => {
-        const random = shortid.generate();
-        socket.emit("Random", {clientId, random});
-    }, 4000);
+    // Give the client their clientId
+    socket.emit("Welcome", {clientId});
+
+    socket.on("Message", (message) => {
+        socket.broadcast.emit("Message", {clientId, message});
+        console.log(`${clientId} said: ${message}`)
+    });
 
     socket.on("disconnect", () => {
-        clearInterval(interval);
+        socket.broadcast.emit('Leave', {clientId});
     })
 });
 
@@ -56,8 +57,8 @@ const rl = readline.createInterface({
 });
 
 function askForMessage (){
-    rl.question("Send a message to all clients:", answer => {
-        io.emit("Text", answer);
+    rl.question("", answer => {
+        io.emit("Message", {clientId: 'server', message: answer});
         askForMessage();
     })
 }

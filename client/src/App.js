@@ -3,27 +3,27 @@ import socketIOClient from "socket.io-client";
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import ChatOutput from './components/ChatOutput';
+import ChatInput from './components/ChatInput';
+
+export default function App() {
+  const [socket, setSocket] = useState(null);
   const [clientId, setClientId] = useState(null);
-  const [random, setRandom] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const socket = socketIOClient('http://localhost:3001');
+    setSocket(socket);
 
-    socket.on("Text", data => {
-      console.log(`Got text: ${data}`);
-    });
-
-    socket.on("ClientId", data => {
+    socket.on("Welcome", data => {
       const {clientId} = data;
       console.log(`Got assigned clientid ${clientId}`);
       setClientId(clientId);
     });
 
-    socket.on("Random", data => {
-      const {clientId, random} = data;
-      console.log(`Got random number ${random} for client ${clientId}`);
-      setRandom(random);
+    socket.on("Message", messageEntry => {
+      console.log('Recieved message:', messageEntry);
+      addMessage(messageEntry);
     });
 
     socket.on("disconnect", () => {
@@ -31,6 +31,15 @@ function App() {
       setClientId(null);
     });
   }, []);
+
+  function sendMessage(message) {
+    socket.emit("Message", message);
+    addMessage({clientId, message, mine: true});
+  }
+
+  function addMessage(messageEntry) {
+    setMessages(messages => messages.concat(messageEntry));
+  }
 
   return (
     <div className="App">
@@ -50,12 +59,11 @@ function App() {
         <p>
           You are {clientId ? `connected as ${clientId}` : 'not connected'}.
         </p>
-        {random
-         ? <p>The last random value was {random}</p>
-         : <p>No data received yet.</p>}
+        <div>
+          <ChatOutput messages={messages}/>
+          <ChatInput sendMessage={sendMessage}/>
+        </div>
       </header>
     </div>
   );
 }
-
-export default App;
