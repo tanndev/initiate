@@ -47,8 +47,9 @@ io.on('connection', socket => {
     socket.emit("Welcome", {clientId});
 
     socket.on("Message", (message) => {
-        socket.broadcast.emit("Message", {clientId, message});
-        console.log(`${clientId} said: ${message}`)
+        const {sender, text} = message;
+        socket.broadcast.emit("Message", {sender, text});
+        console.log(`${sender}(${clientId}) said: ${text}`)
     });
 
     socket.on("disconnect", () => {
@@ -63,7 +64,7 @@ const rl = readline.createInterface({
 
 function askForMessage (){
     rl.question("", answer => {
-        io.emit("Message", {clientId: 'server', message: answer});
+        io.emit("Message", {sender: 'Server', text: answer});
         askForMessage();
     })
 }
