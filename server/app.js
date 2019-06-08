@@ -1,14 +1,15 @@
 const createError = require('http-errors');
 const express = require('express');
+const http = require('http');
 const logger = require('morgan');
 const path = require('path');
 const readline = require('readline');
 const shortid = require('shortid');
+const SocketIo = require('socket.io');
 
-// Initialize express and socket.io
+// Initialize express and http server
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const server = new http.Server(app);
 
 // Serve the client as a static asset.
 const reactIndex = path.resolve(__dirname, '../client/build/index.html');
@@ -33,6 +34,7 @@ app.use((req, res) => {
 });
 
 // Handle Socket.io connections.
+const io = new SocketIo(server, {serveClient: false});
 io.on('connection', socket => {
     const clientId = shortid.generate();
 
