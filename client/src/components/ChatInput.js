@@ -21,7 +21,7 @@ export default function ChatMessages({sendMessage}) {
           value={text}
           type="text"
           placeholder="Enter your message and press ENTER"
-          autoFocus="true"
+          autoFocus={true}
         />
         <button>Send</button>
       </form>

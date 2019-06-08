@@ -27,6 +27,14 @@ export default function Chat() {
       showMessage(message);
     });
 
+    socket.on("Name Change", ({clientId, name}) => {
+      console.log(`Renaming messages by ${clientId} to ${name}`);
+      setMessages(messages => messages.map(message => {
+        if (message.clientId === clientId) message.sender = name;
+        return message;
+      }))
+    });
+
     socket.on("disconnect", () => {
       console.log(`Disconnected.`);
       setClientId(null);
@@ -34,11 +42,13 @@ export default function Chat() {
   }, []);
 
   function handleNameChange(event){
-    setName(event.target.value);
+    const name = event.target.value;
+    setName(name);
+    socket.emit("Name Change", name);
   }
 
   function sendMessage(text) {
-    const message = {sender: name || clientId, text, mine:true};
+    const message = {clientId, sender: name || clientId, text, mine:true};
     socket.emit("Message", message);
     showMessage(message)
   }
@@ -57,7 +67,8 @@ export default function Chat() {
         onChange={handleNameChange}
         value={name}
         type="text"
-        placeholder="Set a custom name..."
+        placeholder="Pick a name..."
+        maxLength="18"
       />
       <ChatMessages messages={messages}/>
       <ChatInput sendMessage={sendMessage}/>

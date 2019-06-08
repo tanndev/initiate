@@ -46,10 +46,15 @@ io.on('connection', socket => {
     // Give the client their clientId
     socket.emit("Welcome", {clientId});
 
-    socket.on("Message", (message) => {
+    socket.on("Message", message => {
         const {sender, text} = message;
-        socket.broadcast.emit("Message", {sender, text});
+        socket.broadcast.emit("Message", {clientId, sender, text});
         console.log(`${sender}(${clientId}) said: ${text}`)
+    });
+
+    socket.on("Name Change", name => {
+        io.emit("Name Change", {clientId, name});
+        console.log(`${clientId} renamed to ${name}`)
     });
 
     socket.on("disconnect", () => {

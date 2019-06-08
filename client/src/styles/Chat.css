@@ -11,13 +11,15 @@
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid orangered;
+  width: 10rem;
 }
 
 .ChatMessages {
   background: white;
   border-radius: 0.5rem;
-  padding: 20px 0;
-  max-width: 900px;
+  padding: 1rem 0;
+  min-width: 30rem;
+  max-width: 50rem;
   width: 100%;
   margin: 0 auto;
   list-style: none;
@@ -49,6 +51,7 @@
   color: gray;
   font-size: 14px;
   padding-bottom: 4px;
+  margin: 0 0.5rem;
 }
 
 .Message-content {
