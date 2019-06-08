@@ -1,0 +1,153 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: TannDev Initiate
+  description: Combat initiative tracker for roleplaying games
+  contact:
+    name: API Support
+    email: james.tanner@tanndev.com
+    url: https://github.com/tanndev/initiate/issues
+
+servers:
+  - url: /api/v1
+
+tags:
+  - name: API
+  - name: Combat
+  - name: Users
+
+paths:
+  /:
+    get:
+      operationId: getApiInfo
+      summary: Get basic information about the API.
+      tags: [API]
+      responses:
+        200:
+          description: General information about the api.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiVersion:
+                    type: string
+                    description: Current version of the API ("V1").
+                  apiBaseUrl:
+                    type: string
+                    description: Base URL which should be appended to all other API requests.
+        401:
+          $ref: "#/components/responses/unauthorized"
+
+  /spec:
+    get:
+      operationId: getApiSpec
+      summary: Get the API specification or Swagger UI.
+      tags: [API]
+      responses:
+        200:
+          description: The Open API 3 specification for this UI.
+          content:
+            text/html:
+              schema:
+                description: A Swagger UI for the API spec.
+            application/json:
+              schema:
+                description: The API spec in JSON format.
+            application/yaml:
+              schema:
+                description: The API spec in YAML format.
+        401:
+          $ref: "#/components/responses/unauthorized"
+        501:
+          description: API Spec not yet available in the requested format.
+
+  /combat/{combatId}:
+    parameters:
+      - $ref: "#/components/parameters/combatId"
+    get:
+      operationId: readCombat
+      summary: Get a combat already in progress
+      tags: [Combat]
+      responses:
+        200:
+          description: The requested combat
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Combat"
+        401:
+          $ref: "#/components/responses/unauthorized"
+        403:
+          $ref: "#/components/responses/forbidden"
+        404:
+          $ref: "#/components/responses/notFound"
+
+
+components:
+  responses:
+    unauthorized:
+      description: You are not logged in.
+    forbidden:
+      description: You don't have sufficient permissions to make this request.
+    notFound:
+      description: The requested resource was not found.
+
+  parameters:
+    combatId:
+      name: combatId
+      in: path
+      description: UID of the combat.
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    Actor:
+      description: A participant within a combat.
+      type: object
+      properties:
+        uid:
+          type: string
+          description: Unique ID of the actor
+          format: uuid
+        name:
+          type: string
+          description: Name of the actor, for display
+          example: Thargog, the destroyer
+        affiliation:
+          type: string
+          description: Who the actor fights for.
+          enum:
+            - Ally
+            - Enemy
+            - Neutral
+    Combat:
+      description: A combat
+      type: object
+      properties:
+        uid:
+          readOnly: true
+          type: string
+          description: A unique ID for the combat.
+          format: uuid
+        actors:
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor'
+    User:
+      description: A user
+      type: object
+      properties:
+        uid:
+          readOnly: true
+          type: string
+          description: A unique ID for the user.
+        name:
+          readOnly: true
+          type: string
+          description: The name of this user, suitable for display.
+          example: Initiate James

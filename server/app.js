@@ -26,6 +26,9 @@ app.use(express.urlencoded({extended: false}));
 
 // TODO Enable authentication
 
+// Serve the API
+app.use('/api/v1', require('./api/v1'));
+
 // For all unhandled requests, serve the React client.
 app.use((req, res) => {
     // If the client requests html, send the index. Otherwise, send a 404 - Not Found error.
