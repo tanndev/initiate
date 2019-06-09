@@ -43,9 +43,12 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
+    "connect-redis": "^3.4.1",
     "express": "^4.17.1",
+    "express-session": "^1.16.1",
     "http-errors": "^1.7.2",
     "morgan": "^1.9.1",
+    "redis": "^2.8.0",
     "shortid": "^2.2.14",
     "socket.io": "^2.2.0",
     "swagger-ui-express": "^4.0.6",

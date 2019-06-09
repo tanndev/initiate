@@ -22,7 +22,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-// TODO Enable sessions
+// Enable sessions
+app.use(require('./middleware/sessions'));
 
 // TODO Enable authentication
 
