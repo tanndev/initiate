@@ -11,7 +11,7 @@ const sessionConfig = {
   name: "TannDev Initiate",
   secret: sessionSecret,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   unset: 'destroy'
 };
 

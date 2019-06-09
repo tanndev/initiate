@@ -1,15 +1,12 @@
 const createError = require('http-errors');
 const express = require('express');
-const http = require('http');
 const logger = require('morgan');
 const path = require('path');
-const readline = require('readline');
-const shortid = require('shortid');
-const SocketIo = require('socket.io');
 
-// Initialize express and http server
+// Initialize express and listen on the server.
+const server = require('./server');
 const app = express();
-const server = new http.Server(app);
+server.on("request", app);
 
 // Serve the client as a static asset.
 const reactIndex = path.resolve(__dirname, '../client/build/index.html');
@@ -27,6 +24,16 @@ app.use(require('./middleware/sessions'));
 
 // TODO Enable authentication
 
+// Make socket.io available to other middleware.
+const io = require('./socket.io');
+app.use((req, res, next) => {
+    req.io = io;
+
+    const {socketId} = req.session;
+    if (socketId) req.clientSocket = io.sockets.connected[socketId];
+    next();
+});
+
 // Serve the API
 app.use('/api/v1', require('./api/v1'));
 
@@ -35,51 +42,6 @@ app.use((req, res) => {
     // If the client requests html, send the index. Otherwise, send a 404 - Not Found error.
     if (req.accepts('html')) res.sendFile(reactIndex);
     else next(createError(404))
-});
-
-// Handle Socket.io connections.
-const io = new SocketIo(server, {serveClient: false});
-io.on('connection', socket => {
-    const clientId = shortid.generate();
-
-    socket.broadcast.emit('Join', {clientId});
-
-    // Give the client their clientId
-    socket.emit("Welcome", {clientId});
-
-    socket.on("Message", message => {
-        const {sender, text} = message;
-        socket.broadcast.emit("Message", {clientId, sender, text});
-        console.log(`${sender}(${clientId}) said: ${text}`)
-    });
-
-    socket.on("Name Change", name => {
-        io.emit("Name Change", {clientId, name});
-        console.log(`${clientId} renamed to ${name}`)
-    });
-
-    socket.on("disconnect", () => {
-        socket.broadcast.emit('Leave', {clientId});
-    })
-});
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-function askForMessage (){
-    rl.question("", answer => {
-        io.emit("Message", {sender: 'Server', text: answer});
-        askForMessage();
-    })
-}
-
-// Listen
-const port = process.env.PORT || 3001;
-server.listen(port, () => {
-    console.log(`Listening on http://localhost:${port}`);
-    askForMessage();
 });
 
 module.exports = app;
