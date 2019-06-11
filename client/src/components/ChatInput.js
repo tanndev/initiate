@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-export default function ChatMessages({sendMessage}) {
+export default function ChatInput({sendMessage}) {
   const [text, setText] = useState('');
 
   function handleChange(event){
