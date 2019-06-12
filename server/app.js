@@ -37,6 +37,16 @@ app.use((req, res, next) => {
 // Serve the API
 app.use('/api/v1', require('./api/v1'));
 
+// TODO Remove
+const Actor = require('./classes/Actor');
+const actor = new Actor({name: "Actor McActorSon", affiliation: 'Ally' });
+console.log(actor);
+
+const Combat = require('./classes/Combat');
+const combat = new Combat();
+combat.addActor(actor);
+console.log(combat);
+
 // For all unhandled requests, serve the React client.
 app.use((req, res) => {
     // If the client requests html, send the index. Otherwise, send a 404 - Not Found error.

@@ -109,7 +109,7 @@ components:
       description: A participant within a combat.
       type: object
       properties:
-        uid:
+        id:
           type: string
           description: Unique ID of the actor
           format: uuid
@@ -124,11 +124,16 @@ components:
             - Ally
             - Enemy
             - Neutral
+        initiative:
+          type: number
+          description: |
+            The initiative value rolled by or assigned to the actor.
+            Note: In the event of ties, other factors may be used to determine final initiative order.
     Combat:
       description: A combat
       type: object
       properties:
-        uid:
+        id:
           readOnly: true
           type: string
           description: A unique ID for the combat.
@@ -142,7 +147,7 @@ components:
       description: A user
       type: object
       properties:
-        uid:
+        id:
           readOnly: true
           type: string
           description: A unique ID for the user.
