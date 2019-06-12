@@ -1,5 +1,13 @@
 const SocketIo = require('socket.io');
 
+// TODO Remove
+const Actor = require('./classes/Actor');
+const actor = new Actor({name: "Actor McActorSon", affiliation: 'Ally' });
+
+const Combat = require('./classes/Combat');
+const combat = new Combat();
+combat.addActor(actor);
+
 // Initialize socket.io and listen on the server.
 const server = require('./server');
 const io = new SocketIo(server, {serveClient: false});
@@ -11,29 +19,16 @@ io.use((socket, next) => require('./middleware/sessions')(socket.request, socket
 io.on('connection', socket => {
   socket.request.session.socketId = socket.id;
   socket.request.session.save();
-  const clientId = socket.id;
-  console.log(`Socket ${clientId} connected.`);
-  console.log('With session:', socket.request.session);
+  console.log(`Socket ${socket.id} connected to default namespace.`);
+});
 
-  socket.broadcast.emit('Join', {clientId});
+io.of('combat').on('connection', socket => {
+  socket.request.session.socketId = socket.id;
+  socket.request.session.save();
+  console.log(`Socket ${socket.id} connected to combat namespace.`);
 
-  // Give the client their clientId
-  socket.emit("Welcome", {clientId});
-
-  socket.on("Message", message => {
-    const {sender, text} = message;
-    socket.broadcast.emit("Message", {clientId, sender, text});
-    console.log(`${sender}(${clientId}) said: ${text}`)
-  });
-
-  socket.on("Name Change", name => {
-    io.emit("Name Change", {clientId, name});
-    console.log(`${clientId} renamed to ${name}`)
-  });
-
-  socket.on("disconnect", () => {
-    socket.broadcast.emit('Leave', {clientId});
-  })
+  console.log('Sending combat:', combat);
+  socket.emit("Combat", combat);
 });
 
 module.exports = io;
