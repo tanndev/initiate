@@ -34,9 +34,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Configure listeners for socket.io namespaces.
-io.on('connection', require('./socket.io/default'));
-io.of('combat').on('connection', require('./socket.io/combat'));
+// Configure socket.io listener
+io.on('connection', require('./socket.io-handler'));
 
 // Serve the API
 app.use('/api/v1', require('./api/v1'));

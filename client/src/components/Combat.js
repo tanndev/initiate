@@ -1,26 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import socketIOClient from 'socket.io-client';
+import React from 'react';
 
-export default function Combat() {
-    const [combat, setCombat] = useState(null);
-
-    // As an effect, connect to the combat Socket.IO namespace for communication..
-    useEffect(() => {
-        const socket = socketIOClient('/combat');
-
-        socket.on("connect", () => {
-            console.log(`Connected to combat namespace as ${socket.id}.`);
-        });
-
-        socket.on("Combat", combat => {
-            console.log('Received new combat:', combat);
-            setCombat(combat);
-        });
-
-        socket.on("disconnect", () => {
-            console.log('Disconnected from combat namespace.');
-        });
-    }, []);
+export default function Combat({ combat }) {
 
     // Gather data for the actors display.
     const actors = combat ? combat.actors.sort((a, b) => a.initiative - b.initiative) : [];

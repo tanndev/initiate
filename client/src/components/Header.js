@@ -1,18 +1,7 @@
 import React from 'react';
 import '../styles/Header.css';
 
-export default function Header() {
-
-    function newCombat() {
-        alert("You asked for a new combat!");
-        console.log('User asked for a new combat!');
-    }
-
-    function joinCombat() {
-        alert("You asked to join combat!");
-        console.log('User asked to join combat!');
-    }
-
+export default function Header({ newCombat, joinCombat }) {
     return (
         <header className="Header">
             <h2 className="Header-title">
