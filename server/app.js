@@ -34,30 +34,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// Listen for new socket.io connections in the default namespace.
-io.on('connection', socket => {
-    socket.request.session.socketId = socket.id;
-    socket.request.session.save();
-    console.log(`Socket ${socket.id} connected to default namespace.`);
-});
-
-// TODO Remove
-const Actor = require('./classes/Actor');
-const actor = new Actor({name: "Actor McActorSon", affiliation: 'Ally' });
-
-const Combat = require('./classes/Combat');
-const combat = new Combat();
-combat.addActor(actor);
-
-// Listen for new socket.io connections in the combat namespace.
-io.of('combat').on('connection', socket => {
-    socket.request.session.socketId = socket.id;
-    socket.request.session.save();
-    console.log(`Socket ${socket.id} connected to combat namespace.`);
-
-    console.log('Sending combat:', combat);
-    socket.emit("Combat", combat);
-});
+// Configure listeners for socket.io namespaces.
+io.on('connection', require('./socket.io/default'));
+io.of('combat').on('connection', require('./socket.io/combat'));
 
 // Serve the API
 app.use('/api/v1', require('./api/v1'));
