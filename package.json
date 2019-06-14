@@ -45,7 +45,7 @@
   "dependencies": {
     "connect-redis": "^3.4.1",
     "express": "^4.17.1",
-    "express-session": "^1.16.1",
+    "express-session": "^1.16.2",
     "http-errors": "^1.7.2",
     "morgan": "^1.9.1",
     "nanoid": "^2.0.3",
