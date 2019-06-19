@@ -1,0 +1,48 @@
+.Combat {
+
+}
+
+.Combat-actors {
+
+}
+
+.Actor {
+  margin: 0.2rem;
+  padding: 0.2rem 0.5rem;
+
+
+  border-radius: 0.5rem;
+  border: 0.2rem solid black;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.Actor.Ally {
+  background: mediumblue;
+  color: white;
+}
+
+.Actor.Enemy {
+  background: #af0000;
+  color: #e1e100;
+}
+
+.Actor.Neutral {
+  background: gray;
+  color: black;
+}
+
+.Actor-name {
+  flex-grow: 1
+}
+
+/*.Actor-affiliation {*/
+
+/*  !*flex-grow: 1;*!*/
+/*  text-align: center;*/
+/*}*/
+
+.Actor-initiative {
+  margin-right: 0.5rem;
+}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import socket from '../socket-io';
 
+import '../styles/Combat.css';
+
 export default function Combat() {
     const [combat, setCombat] = useState(null);
 
@@ -33,7 +35,7 @@ export default function Combat() {
                 {actors.map(actor => (
                     <div key={actor.id} className={`Actor ${actor.affiliation}`}>
                         <div className="Actor-name">{actor.name}</div>
-                        <div className="Actor-affiliation">{actor.affiliation}</div>
+                        {/*<div className="Actor-affiliation">{actor.affiliation}</div>*/}
                         <div className="Actor-initiative">{actor.initiative}</div>
                     </div>
                 ))}
