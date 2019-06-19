@@ -9,10 +9,11 @@ Header {
 }
 
 .Header-title {
-  font-family: 'Cormorant SC', serif;
-  font-size: 2.5em;
+  /*font-family: 'Cormorant SC', serif;  !* < Previous font, for comparison. *!*/
+  font-family: 'Montserrat Subrayada', serif;
+  font-size: 2em;
   margin: 0.1rem 1rem;
-  color: #d2cb16;
+  color: #d8d116;
 }
 
 .Navbar {
