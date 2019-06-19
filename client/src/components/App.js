@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
-import socket from '../socket-io';
+import React from 'react';
 
 import '../styles/App.css';
 
@@ -8,23 +6,6 @@ import Header from './Header';
 import Combat from './Combat';
 
 export default function App() {
-    const [connected, setConnected] = useState(false);
-
-    // Monitor the connection to the socket.
-    useEffect(() => {
-        socket.on("connect", () => {
-            console.log(`Connected as ${socket.id}.`);
-            setConnected(true);
-        });
-
-        socket.on("disconnect", () => {
-            console.log(`Disconnected from default namespace.`);
-            setConnected(false);
-        });
-
-    }, []);
-
-    // Render the app.
     return (
         <div className="App">
             <Header/>
@@ -35,9 +16,9 @@ export default function App() {
                 </p>
                 <Combat/>
             </div>
-            <footer>
-                <p>{connected ? 'Connected!' : 'Disconnected :('}</p>
-            </footer>
+            {/*<footer>*/}
+            {/*    <p>{connected ? 'Connected!' : 'Disconnected :('}</p>*/}
+            {/*</footer>*/}
         </div>
     );
 }

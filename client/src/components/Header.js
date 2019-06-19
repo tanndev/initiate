@@ -9,10 +9,15 @@ export default function Header() {
 
     // Monitor the connection to the socket.
     useEffect(() => {
+        // Set the initial state when the page is loaded.
+        setConnected(socket.connected);
+
+        // Handle connections
         socket.on("connect", () => {
             setConnected(true);
         });
 
+        // Handle disconnections.
         socket.on("disconnect", () => {
             setConnected(false);
         });
@@ -29,27 +34,21 @@ export default function Header() {
         else alert("Can't join a combat right now.");
     }
 
+    const navbarButtons = [
+        <div className="Navbar-button" onClick={newCombat}> New Combat </div>,
+        <div className="Navbar-button" onClick={joinCombat}> Join Combat </div>
+    ];
+
+    const navbarReconnecting = <div className="Navbar-reconnecting">Reconnecting...</div>;
+
     return (
         <header className="Header">
             <h2 className="Header-title">
                 Initiate
             </h2>
-            {connected
-             ? (
-                 <div className="Navbar">
-                     <div className="Navbar-button" onClick={newCombat}>
-                         New Combat
-                     </div>
-                     <div className="Navbar-button" onClick={joinCombat}>
-                         Join Combat
-                     </div>
-                 </div>
-             )
-             : (
-                 <div className="Navbar-reconnecting">Reconnecting...</div>
-             )
-            }
-
+            <div className="Navbar">
+                {connected ? navbarButtons : navbarReconnecting}
+            </div>
         </header>
     );
 }

@@ -3,34 +3,50 @@ Header {
   flex-direction: row;
   align-items: center;
   background: #902222;
+
+  border: solid black;
+  border-width: 0.2rem 0.5rem;
 }
 
 .Header-title {
   font-family: 'Cormorant SC', serif;
-  font-size: xx-large;
+  font-size: 2.5em;
   margin: 0.1rem 1rem;
   color: #d2cb16;
 }
 
 .Navbar {
-  display: flex;
   height: 100%;
+  display: flex;
   align-items: center;
 }
 
-.Navbar-button {
+.Navbar * {
   height: 100%;
   padding: 0.2rem 1rem;
   text-align: center;
-  color: #c3fbff;
-  cursor: pointer;
+
+  font-family: 'Marcellus SC', serif;
+  font-size: 1.5em;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
+.Navbar-button {
+  cursor: pointer;
+  color: #c3fbff;
+
+  /*background-color: blue;*/
+
+}
+
 .Navbar-button:hover {
   background-color: #111;
+}
+
+.Navbar-reconnecting {
+  color: white;
 }
 
