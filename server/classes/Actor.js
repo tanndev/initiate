@@ -6,7 +6,7 @@ const chance = new Chance();
 /**
  * @typedef {'Ally' | 'Enemy' | 'Neutral'} AFFILIATION
  */
-const AFFILIATIONS = ['Ally', 'Enemy', 'Neutral', 'Unaffiliated'];
+const AFFILIATIONS = ['Ally', 'Enemy', 'Neutral'];
 
 const INVALID_NAME_ERROR = "Actor.name must be a string.";
 const INVALID_AFFILIATION_ERROR = `Actor.affiliation must be one of: ${AFFILIATIONS.join(', ')}`;
@@ -15,14 +15,19 @@ const INVALID_INITIATIVE_ERROR = "Actor.initiative must be an integer.";
 class Actor {
 
     static randomActorList(){
-        const quantity = chance.integer({min: 2, max: 8});
-        return chance.n(Actor.randomActor, quantity);
+        const requiredActors = [
+            Actor.randomActor({affiliation: 'Ally'}),
+            Actor.randomActor({affiliation: 'Enemy'})
+        ];
+        const additionalQuantity = chance.integer({min: 0, max: 8});
+        const additionalActors = chance.n(Actor.randomActor, additionalQuantity);
+        return requiredActors.concat(additionalActors);
     }
 
-    static randomActor() {
-        const name = Actor.randomName();
-        const affiliation = Actor.randomAffiliation();
-        const initiative = Actor.randomInitiative();
+    static randomActor(options = {}) {
+        const name = options.name || Actor.randomName();
+        const affiliation = options.affiliation ||Actor.randomAffiliation();
+        const initiative = options.initiative ||Actor.randomInitiative();
         return new Actor({name, affiliation, initiative});
     }
 
@@ -38,7 +43,7 @@ class Actor {
         return chance.integer(({min: 0, max: 25}))
     }
 
-    constructor({ id, name = "Unnamed Actor", affiliation = 'Unaffiliated', initiative = 0} = {}) {
+    constructor({ id, name = "Unnamed Actor", affiliation = 'Neutral', initiative = 0} = {}) {
         /**
          * Internal storage for {@link Actor.id}.
          * @type {string}
