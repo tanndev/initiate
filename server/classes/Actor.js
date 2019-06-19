@@ -1,4 +1,7 @@
+const Chance = require('chance');
 const generateId = require('../lib/generateId');
+
+const chance = new Chance();
 
 /**
  * @typedef {'Ally' | 'Enemy' | 'Neutral'} AFFILIATION
@@ -10,6 +13,30 @@ const INVALID_AFFILIATION_ERROR = `Actor.affiliation must be one of: ${AFFILIATI
 const INVALID_INITIATIVE_ERROR = "Actor.initiative must be an integer.";
 
 class Actor {
+
+    static randomActorList(){
+        const quantity = chance.integer({min: 2, max: 8});
+        return chance.n(Actor.randomActor, quantity);
+    }
+
+    static randomActor() {
+        const name = Actor.randomName();
+        const affiliation = Actor.randomAffiliation();
+        const initiative = Actor.randomInitiative();
+        return new Actor({name, affiliation, initiative});
+    }
+
+    static randomName() {
+        return chance.name({nationality: 'en'})
+    }
+
+    static randomAffiliation(){
+        return chance.pickone(AFFILIATIONS);
+    }
+
+    static randomInitiative(){
+        return chance.integer(({min: 0, max: 25}))
+    }
 
     constructor({ id, name = "Unnamed Actor", affiliation = 'Unaffiliated', initiative = 0} = {}) {
         /**

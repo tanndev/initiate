@@ -1,10 +1,5 @@
-// TODO Remove
 const Actor = require('./classes/Actor');
-const actor = new Actor({name: "Actor McActorSon", affiliation: 'Ally' });
-
 const Combat = require('./classes/Combat');
-const combat = new Combat();
-combat.addActor(actor);
 
 /**
  * Stores the active combats, indexed by ID.
@@ -25,7 +20,7 @@ module.exports = socket => {
 
         // Create a new combat.
         const combat = new Combat();
-        combat.addActor(new Actor({name: "Actor McActorSon", affiliation: 'Ally' })); // TODO Remove this.
+        Actor.randomActorList().forEach(actor => combat.addActor(actor));
         combats.set(combat.id, combat);
 
         // Connect the client to the combat room and send them the combat.
