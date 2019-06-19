@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import socket from '../socket-io';
 
-export default function Combat({ combat }) {
+export default function Combat() {
+    const [combat, setCombat] = useState(null);
+
+    // Monitor the socket for combat commands.
+    useEffect(() => {
+        socket.on("update combat", combat => {
+            console.log('Received new combat:', combat);
+            setCombat(combat);
+        });
+
+    }, []);
 
     // Gather data for the actors display.
     const actors = combat ? combat.actors.sort((a, b) => a.initiative - b.initiative) : [];
