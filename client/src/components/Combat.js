@@ -14,7 +14,7 @@ export default function Combat() {
     }, []);
 
     // Gather data for the actors display.
-    const actors = combat ? combat.actors.sort((a, b) => a.initiative - b.initiative) : [];
+    const actors = combat ? combat.actors.sort((a, b) => b.initiative - a.initiative) : [];
     const actorCount = actors.length === 1 ? 'is 1 actor' : `are ${actors.length} actors`;
 
     // If there's no current combat, render a simple display.
@@ -29,7 +29,7 @@ export default function Combat() {
         <div className="Combat">
             <p> You are in combat {combat.id}. </p>
             <p> There {actorCount} in this combat. </p>
-            <div className="ActorList">
+            <div className="Combat-actors">
                 {actors.map(actor => (
                     <div key={actor.id} className={`Actor ${actor.affiliation}`}>
                         <div className="Actor-name">{actor.name}</div>
