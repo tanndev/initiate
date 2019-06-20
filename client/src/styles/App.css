@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-.App-home {
+.App-content {
   background-color: #411c17;
   flex-grow: 1;
   display: flex;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import socketIOClient from 'socket.io-client';
 
 import '../styles/App.css';
@@ -44,7 +45,7 @@ export default function App() {
         else alert("Can't join a combat right now.");
     }
 
-    const greeting = (
+    const greeting = () => (
         <p>
             Visit our <a href="https://github.com/tanndev/initiate">Github</a> to see our roadmap,
             keep up to date on our progress, or contribute!
@@ -52,15 +53,17 @@ export default function App() {
     );
 
     return (
-        <div className="App">
-            <Header connected={connected} newCombat={newCombat} joinCombat={joinCombat}/>
-            <div className="App-home">
-                {combat ? '' : greeting}
-                <Combat combat={combat}/>
+        <Router>
+            <div className="App">
+                <Header connected={connected} newCombat={newCombat} joinCombat={joinCombat}/>
+                <div className="App-content">
+                    <Route exact path='/' render={greeting}/>
+                    <Route path='/combat/:id?' render={props => <Combat {...props} combat={combat}/> }/>
+                </div>
+                <footer>
+                    <p>{connected ? 'Connected!' : 'Disconnected :('}</p>
+                </footer>
             </div>
-            <footer>
-                <p>{connected ? 'Connected!' : 'Disconnected :('}</p>
-            </footer>
-        </div>
+        </Router>
     );
 }

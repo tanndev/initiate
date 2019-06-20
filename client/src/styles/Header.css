@@ -8,6 +8,10 @@ Header {
   border-width: 0.2rem 0.5rem;
 }
 
+Header a {
+  text-decoration: none;
+}
+
 .Header-title {
   /*font-family: 'Cormorant SC', serif;  !* < Previous font, for comparison. *!*/
   font-family: 'Montserrat Subrayada', serif;
