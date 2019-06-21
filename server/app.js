@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 });
 
 // Configure socket.io listener
-io.on('connection', require('./socket.io-handler'));
+io.on('connection', require('./socket.io-handler')(io));
 
 // Serve the API
 app.use('/api/v1', require('./api/v1'));
