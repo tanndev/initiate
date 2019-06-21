@@ -27,7 +27,7 @@ class Combat {
      * A list of all actors involved in the combat.
      * @return {Actor[]}
      */
-    get actors() { return [...this._actors.values()]; }
+    get actors() { return [...this._actors.values()].sort((a, b) => a.compareInitiative(b)); }
 
     /**
      * Add a new actor to {@link Combat.actors}.
