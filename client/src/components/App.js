@@ -5,14 +5,14 @@ import '../styles/App.css';
 
 import Header from './Header';
 import Combat from './Combat';
+import Footer from './Footer';
 
 export default function App() {
 
-    const githubLink = (<a href="https://github.com/tanndev/initiate">Github</a>);
-
-    const greeting = () => (
+    const Home = () => (
         <p>
-            Visit our {githubLink} to see our roadmap, keep up to date on our progress, or contribute!
+            Visit our <a href="https://github.com/tanndev/initiate">Github</a> to see our roadmap,
+            keep up to date on our progress, or contribute!
         </p>
     );
 
@@ -21,12 +21,10 @@ export default function App() {
             <div className="App">
                 <Header/>
                 <div className="App-content">
-                    <Route exact path='/' render={greeting}/>
+                    <Route exact path='/' component={Home}/>
                     <Route path='/combat/:combatId?' component={Combat}/>
                 </div>
-                <footer>
-                    <p>Check us out on {githubLink}.</p>
-                </footer>
+                <Footer/>
             </div>
         </Router>
     );
