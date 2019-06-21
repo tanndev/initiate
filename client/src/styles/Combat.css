@@ -1,9 +1,11 @@
 .Combat {
-
+  display: flex;
+  flex-direction: column;
 }
 
 .Combat-actors {
-
+  display: flex;
+  flex-direction: column;
 }
 
 .Actor {

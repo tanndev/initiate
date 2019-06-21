@@ -5,13 +5,17 @@
 }
 
 .App-content {
-  background-color: #411c17;
-  flex-grow: 1;
+  padding-bottom: 1rem;
   display: flex;
+  flex: 1;
   flex-direction: column;
+
+  font-size: calc(10px + 2vmin); /* TODO Reconsider this */
+
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: center; /* TODO Reconsider this */
+
+  background-color: #411c17;
   color: white;
 }
 
