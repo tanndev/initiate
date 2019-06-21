@@ -17,8 +17,8 @@ export default function App() {
     );
 
     return (
-        <Router>
-            <div className="App">
+        <div className="App">
+            <Router>
                 <Header/>
                 <div className="App-content">
                     <Route exact path='/' render={greeting}/>
@@ -27,7 +27,7 @@ export default function App() {
                 <footer>
                     <p>Check us out on {githubLink}.</p>
                 </footer>
-            </div>
-        </Router>
+            </Router>
+        </div>
     );
 }
