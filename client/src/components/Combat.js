@@ -37,6 +37,14 @@ export default function Combat({ match }) {
             setCombat(combat);
         });
 
+        // Monitor for other users joining and leaving.
+        socket.on("client joined", id => {
+            console.log('Another client joined:', id);
+        });
+        socket.on("client left", id => {
+            console.log('Another client left:', id);
+        });
+
         // Clean up when the component unmounts.
         return () => {
             console.log('Removing listeners.');

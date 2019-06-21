@@ -18,8 +18,16 @@ module.exports = io => {
      *
      * @param {SocketIO.Socket} socket
      */
-    return socket => {
+    const handler = socket => {
         console.log(`Socket ${socket.id} connected.`);
+
+        socket.on('disconnecting', () => {
+            const rooms = Object.keys(socket.rooms);
+            rooms.forEach(room => {
+                socket.broadcast.to(room).emit('client left', socket.id);
+            })
+        });
+
 
         socket.on('create combat', () => {
             console.log(`Socket ${socket.id} asked for a new combat.`);
@@ -40,6 +48,7 @@ module.exports = io => {
             if (!combat) socket.emit('update combat', { id, error: "No such combat." });
             else {
                 socket.join(id);
+                socket.broadcast.to(id).emit('client joined', socket.id);
                 socket.emit('update combat', combat);
 
                 io.in(id).clients((error, clients) => {
@@ -52,6 +61,7 @@ module.exports = io => {
         socket.on('leave combat', id => {
             console.log(`Socket ${socket.id} asked to leave combat ${id}.`);
             socket.leave(id);
+            socket.broadcast.to(id).emit('client left', socket.id);
 
             // TODO Clean up the combat if nobody is in it.
             io.in(id).clients((error, clients) => {
@@ -60,4 +70,5 @@ module.exports = io => {
             });
         });
     };
+    return handler;
 };
