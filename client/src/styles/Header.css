@@ -39,7 +39,7 @@ Header a {
   justify-content: center;
 }
 
-.Navbar-button {
+.Navbar-link {
   cursor: pointer;
   color: #c3fbff;
 
@@ -47,11 +47,7 @@ Header a {
 
 }
 
-.Navbar-button:hover {
+.Navbar-link:hover {
   background-color: #111;
-}
-
-.Navbar-reconnecting {
-  color: white;
 }
 
