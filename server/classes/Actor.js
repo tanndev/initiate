@@ -19,7 +19,7 @@ class Actor {
             Actor.randomActor({affiliation: 'Ally'}),
             Actor.randomActor({affiliation: 'Enemy'})
         ];
-        const additionalQuantity = chance.integer({min: 0, max: 8});
+        const additionalQuantity = chance.integer({min: 0, max: 10});
         const additionalActors = chance.n(Actor.randomActor, additionalQuantity);
         return requiredActors.concat(additionalActors);
     }
