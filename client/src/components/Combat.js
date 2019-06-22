@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// import { Redirect } from "react-router-dom";
-import socketIOClient from 'socket.io-client';
+import socket from '../socket.io';
 
 import '../styles/Combat.css';
-
-const socket = socketIOClient();
 
 export default function Combat({ history, match }) {
     const [combat, setCombat] = useState(null);
 
-    // Fire events on the path.
+    // Handle inputs from the path.
     useEffect(() => {
         const { id } = match.params;
         if (id === 'new') {
@@ -22,26 +19,35 @@ export default function Combat({ history, match }) {
         }
     }, [history, match.params]);
 
-    // Monitor the socket for combat commands.
+    // On mount/unmount, add/remove listeners to teh socket.
     useEffect(() => {
-        // Monitor for combat commands.
-        socket.on("update combat", combat => {
-            console.log('Received new combat:', combat);
-            setCombat(combat);
-        });
+        // Define the listeners.
+        const listeners = {
+            // Update the combat object.
+            "update combat": (combat => {
+                console.log('Received new combat:', combat);
+                setCombat(combat);
+            }),
 
-        // Monitor for other users joining and leaving.
-        socket.on("client joined", id => {
-            console.log('Another client joined:', id);
-        });
-        socket.on("client left", id => {
-            console.log('Another client left:', id);
-        });
+            // Handle new clients joining.
+            "client joined": (id => {
+                console.log('Another client joined:', id);
+            }),
 
-        // Clean up when the component unmounts.
+            // Handle existing clients leaving.
+            "client left": (id => {
+                console.log('Another client left:', id);
+            })
+        };
+
+        // Mount the listeners.
+        console.log('Adding listeners...');
+        for (const name in listeners) socket.on(name, listeners[name]);
+
+        // Clean up by removing the listeners.
         return () => {
-            console.log('Removing listeners.');
-            socket.removeAllListeners();
+            console.log('Removing listeners...');
+            for (const name in listeners)  socket.removeListener(name, listeners[name]);
         };
     }, []);
 
