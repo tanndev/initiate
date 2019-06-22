@@ -73,15 +73,25 @@ export default function Combat({ history, match }) {
         </div>
     );
 
+    // Pick a random actor to have a turn, until the server keeps trap.
+    // TODO Use the server value instead.
+    const randomActorIndex = Math.floor(Math.random() * combat.actors.length);
+
     // Otherwise, render the full combat display.
     return (
         <div className="Combat">
             <p>Combat ID: <code>{combat.id}</code>.</p>
-            <div className="Combat-actors">
-                {combat.actors.map(actor => (
-                    <div key={actor.id} className={`Actor ${actor.affiliation}`}>
-                        <div className="Actor-name">{actor.name}</div>
-                        <div className="Actor-initiative">{actor.initiative}</div>
+            <div className="InitiativeList">
+                {combat.actors.map((actor, index) => (
+                    <div key={actor.id} className='InitiativeList-row'>
+                        {index === randomActorIndex
+                         ? <i className="material-icons InitiativeList-turnLabel">label</i>
+                         : <div className="InitiativeList-turnLabel"/>
+                        }
+                        <div className={`Actor ${actor.affiliation}`}>
+                            <div className="Actor-name">{actor.name}</div>
+                            <div className="Actor-initiative">{actor.initiative}</div>
+                        </div>
                     </div>
                 ))}
             </div>

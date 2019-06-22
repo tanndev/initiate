@@ -22,7 +22,7 @@ export default function Footer() {
             {connected
              ? <div>Connected as {socket.id}</div>
              : <div>
-                 <i className="material-icons md-24 blink icon">sync_problem</i>
+                 <i className="material-icons Footer-reconnectingIcon">sync_problem</i>
                  <div>Reconnecting...</div>
              </div>}
         </footer>
