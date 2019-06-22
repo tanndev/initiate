@@ -22,7 +22,7 @@ export default function App() {
                 <Header/>
                 <div className="App-content">
                     <Route exact path='/' component={Home}/>
-                    <Route path='/combat/:combatId?' component={Combat}/>
+                    <Route path='/combat/:id?' component={Combat}/>
                 </div>
                 <Footer/>
             </div>

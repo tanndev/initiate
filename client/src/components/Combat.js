@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import socketIOClient from 'socket.io-client';
 
 import '../styles/Combat.css';
 
 const socket = socketIOClient();
 
-export default function Combat({ match }) {
+export default function Combat({ history, match }) {
     const [combat, setCombat] = useState(null);
 
-    console.log(`Rendered component:`, match.url);
+    // Fire events on the path.
+    useEffect(() => {
+        const { id } = match.params;
+        if (id === 'new') {
+            socket.emit('create combat');
+            history.replace(`/combat`);
+        }
+        else if (id) {
+            socket.emit('join combat', id);
+            history.replace(`/combat`);
+        }
+    }, [history, match.params]);
 
     // Monitor the socket for combat commands.
     useEffect(() => {
-        console.log('Adding listeners.');
-
         // Monitor for combat commands.
         socket.on("update combat", combat => {
             console.log('Received new combat:', combat);
@@ -43,16 +52,6 @@ export default function Combat({ match }) {
             socket.emit('leave combat', combat.id);
         };
     }, [combat]);
-
-    const { combatId } = match.params;
-    if (combatId === 'new') {
-        socket.emit('create combat');
-        return (<Redirect to='/combat'/>);
-    }
-    if (combatId) {
-        socket.emit('join combat', combatId);
-        return (<Redirect to='/combat'/>);
-    }
 
     if (combat && combat.error) return (
         <div className="Combat">
