@@ -2,8 +2,7 @@ footer {
   background: black;
   color: white;
   font-family: monospace;
-  font-size: smaller;
-  padding: 0.4rem;
+  padding: 0.8rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,4 +16,22 @@ footer img {
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+footer > div {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+.blink{
+  animation:blinking 0.6s infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+@keyframes blinking{
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
 }
