@@ -85,7 +85,7 @@ export default function Combat({ history, match }) {
                 {combat.actors.map((actor, index) => (
                     <div key={actor.id} className='InitiativeList-row'>
                         {index === randomActorIndex
-                         ? <i className="material-icons InitiativeList-turnLabel">label</i>
+                         ? <i className="material-icons InitiativeList-turnLabel">label_important</i>
                          : <div className="InitiativeList-turnLabel"/>
                         }
                         <div className={`Actor ${actor.affiliation}`}>
