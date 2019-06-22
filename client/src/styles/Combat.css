@@ -11,6 +11,7 @@
 .Actor {
   margin: 0.2rem;
   padding: 0.2rem 0.5rem;
+  min-width: 12em;
 
 
   border-radius: 0.5rem;
