@@ -11,7 +11,6 @@
 .Actor {
   margin: 0.2rem;
   padding: 0.2rem 0.5rem;
-  min-width: 12em;
 
 
   border-radius: 0.5rem;
@@ -37,7 +36,8 @@
 }
 
 .Actor-name {
-  flex-grow: 1
+  flex-grow: 1;
+  min-width: 10em;
 }
 
 /*.Actor-affiliation {*/
